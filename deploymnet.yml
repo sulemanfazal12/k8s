@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-deploy-app
+  name: my-deploy-app
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: my-deploy-app
+  template:
+    metadata:
+      labels:
+        app: my-deploy-app
+    spec:
+      containers:
+      - image: sreeharshav/rollingupdate:v1
+        name: nginx
+        ports:
+        - containerPort: 80
+       
