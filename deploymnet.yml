@@ -16,7 +16,7 @@ spec:
         app: my-deploy-app
     spec:
       containers:
-      - image: sreeharshav/rollingupdate:v1
+      - image: sreeharshav/rollingupdate:v5
         name: nginx
         ports:
         - containerPort: 80
