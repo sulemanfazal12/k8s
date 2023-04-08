@@ -5,13 +5,8 @@ metadata:
     app: my-deploy-app
   name: my-deploy-app
 spec:
-  minReadySeconds: 10
   replicas: 5
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 0
-      maxUnavailable: 0
   selector:
     matchLabels:
       app: my-deploy-app
