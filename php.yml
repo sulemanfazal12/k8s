@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-dep1
+  name: my-dep1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-dep1
+  template:
+    metadata:
+      labels:
+        app: my-dep1
+    spec:
+      containers:
+      - image: registry.k8s.io/hpa-example
+        name: hpa-example
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
+          requests:
+            cpu: "400m"
+            memory: "500Mi"
+
+
+
+
+
+kubectl autoscale deployment my-dep1 --cpu-percent=30 --min=1 --max=10
+
+kubectl get hpa
+
+
+if u increse repliacset to 2 i will terminate bcoz hpa is more priority to the scheduler 
+
+to test load and HPA
+
+kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://18.60.228.205:32708; done"ile sleep 0.01; do wget -q -O- http://php
+

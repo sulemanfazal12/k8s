@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:                           # linked with local-storage.yml
+  name: pv-local
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /mnt/disl/vol1      # mkdir -p /mnt/disl/vol1 in local node   and chmod -R 777 /mnt/disl/vol1
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - ip-172-31-30-221.ap-south-2.compute.internal
+
+  

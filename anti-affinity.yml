@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: my-app       # anti affinity example code
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - my-app          # if any node consist this type of labeled pod further it will not create a pod in this node
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: my-continer
+        image: nginx:latest
+        ports:
+        - containerPort: 8080

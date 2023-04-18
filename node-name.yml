@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: my-app
+  name: my-app
+spec:
+  containers:
+  - image: nginx
+    name: my-app
+  nodeName: ip-172-31-30-221.ap-south-2.compute.internal
+
+
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-pod-rep
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: my-app
+  template:
+    metadata:
+      labels:
+        run: my-app
+

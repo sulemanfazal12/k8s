@@ -24,7 +24,7 @@ spec:
   containers:
     - name: my-container
       image: nginx
-      envFrom:
+      envFrom: 
         - configMapRef:
             name: game-env
   volumes:
@@ -33,3 +33,37 @@ spec:
         name: game-env
 
 
+---------------------------------------------------
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-test
+data:
+  APP_CONFIG: prod
+  LOG_LEVEL: info
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+    - name: my-container
+      image: nginx
+      env:
+        - name: ALLOWED     
+          valueFrom:
+            configMapKeyRef:
+              name: game-env   
+              key: allowed 
+        - name: LIVENES     
+          valueFrom:
+            configMapKeyRef:
+              name: game-env   
+              key: lives
+        - name: ENEMIES
+          valueFrom:
+            configMapKeyRef:
+              name: game-env   
+              key: enemies
+          
